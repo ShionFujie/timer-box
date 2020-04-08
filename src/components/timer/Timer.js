@@ -1,59 +1,19 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
+import PresentationTimer from "./Presentation";
 
 export default function Timer() {
-  const [timeLeft, hasStarted, isPaused, start, stop, pause, resume] = useTimer(
+  const [seconds, hasStarted, isPaused, start, stop, pause, resume] = useTimer(
     5
   );
+  const timeLeft = {
+    ss: `${seconds % 60}`.padStart(2, "0"),
+    mm: `${Math.floor(seconds / 60)}`.padStart(2, "0")
+  };
   return (
-    <div>
-      {hasStarted ? (
-        <Fragment>
-          {isPaused ? (
-            <ResumeButton onResume={resume} />
-          ) : (
-            <PauseButton onPause={pause} />
-          )}
-          <StopButton onStop={stop} />
-        </Fragment>
-      ) : (
-        <Fragment>
-          <StartButton onStart={start} />
-          <RemoveButton />
-        </Fragment>
-      )}
-      <TimerDisplay seconds={timeLeft} />
-    </div>
+    <PresentationTimer
+      {...{ timeLeft, hasStarted, isPaused, start, stop, pause, resume }}
+    />
   );
-}
-
-function TimerDisplay({ seconds }) {
-  const ss = `${seconds % 60}`.padStart(2, "0");
-  const mm = `${Math.floor(seconds / 60)}`.padStart(2, "0");
-  return (
-    <div>
-      {mm}:{ss}
-    </div>
-  );
-}
-
-function StartButton({ onStart }) {
-  return <div onClick={onStart}>Start</div>;
-}
-
-function RemoveButton({ onRemove }) {
-  return <div onClick={onRemove}>Remove</div>;
-}
-
-function PauseButton({ onPause }) {
-  return <div onClick={onPause}>Pause</div>;
-}
-
-function ResumeButton({ onResume }) {
-  return <div onClick={onResume}>Resume</div>;
-}
-
-function StopButton({ onStop }) {
-  return <div onClick={onStop}>Stop</div>;
 }
 
 function useTimer(span) {
