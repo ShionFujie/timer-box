@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import PresentationTimer from "./Presentation";
+import Timer from "./Presentation";
 
-export default function Timer() {
+export default function Container() {
   const [seconds, hasStarted, isPaused, start, stop, pause, resume] = useTimer(
     5
   );
@@ -10,7 +10,7 @@ export default function Timer() {
     mm: `${Math.floor(seconds / 60)}`.padStart(2, "0")
   };
   return (
-    <PresentationTimer
+    <Timer
       {...{ timeLeft, hasStarted, isPaused, start, stop, pause, resume }}
     />
   );
