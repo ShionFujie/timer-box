@@ -17,52 +17,52 @@ export default function Container() {
 }
 
 function useTimer(span) {
-  var [timeLeft, setTimeLeft] = useState(span);
-  const [hasStarted, setStarted] = useState(false);
-  const [isPaused, setPaused] = useState(false);
-  const [runningInterval, setRunningInterval] = useState(null);
+  var [timeLeft, _setTimeLeft] = useState(span);
+  const [hasStarted, _setStarted] = useState(false);
+  const [isPaused, _setPaused] = useState(false);
+  const [runningInterval, _setRunningInterval] = useState(null);
   function start() {
     if (!hasStarted) {
-      setStarted(true);
-      startPeriodicCounting();
+      _setStarted(true);
+      _startPeriodicCounting();
     }
   }
 
   function stop() {
     if (hasStarted) {
-      stopPeriodicCounting();
-      setTimeLeft(span);
-      setStarted(false);
+      _stopPeriodicCounting();
+      _setTimeLeft(span);
+      _setStarted(false);
     }
   }
 
   function pause() {
     if (!isPaused) {
-      setPaused(true);
-      stopPeriodicCounting();
+      _setPaused(true);
+      _stopPeriodicCounting();
     }
   }
 
   function resume() {
     if (isPaused) {
-      setPaused(false);
-      startPeriodicCounting();
+      _setPaused(false);
+      _startPeriodicCounting();
     }
   }
 
-  function startPeriodicCounting() {
+  function _startPeriodicCounting() {
     var t = timeLeft;
-    setRunningInterval(
+    _setRunningInterval(
       setInterval(() => {
-        setTimeLeft(--t);
+        _setTimeLeft(--t);
       }, 1000)
     );
   }
 
-  function stopPeriodicCounting() {
+  function _stopPeriodicCounting() {
     if (runningInterval != null) {
       clearInterval(runningInterval);
-      setRunningInterval(null);
+      _setRunningInterval(null);
     }
   }
 
